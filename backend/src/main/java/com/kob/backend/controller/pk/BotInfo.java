@@ -10,10 +10,10 @@ import java.util.Map;
 @RequestMapping("/pk/")
 public class BotInfo {
     @RequestMapping("getbotinfo/")
-    public Map<String, Integer> getBotInfor() {
-        HashMap<String, Integer> map = new HashMap<>();
-        map.put("y", 1000);
-        map.put("w", 1500);
-        return map;
+    public Map<String, String> getBotInfor() {
+        HashMap<String, String> bot1 = new HashMap<>();
+        bot1.put("name", "tiger");
+        bot1.put("rating", "1500");
+        return bot1;
     }
 }
