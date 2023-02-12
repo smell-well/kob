@@ -12,7 +12,7 @@ export class GameMap extends AcGameObject {
         this.L = 0; // 单位长度
 
         this.cols = 13;
-        this.rows = 13;
+        this.rows = 14;
 
         this.inner_walls_count = 20;
         this.walls = [];
@@ -58,11 +58,12 @@ export class GameMap extends AcGameObject {
             for (let j = 0; j < 1000; j++) {
                 let r = parseInt(Math.random() * this.rows);
                 let c = parseInt(Math.random() * this.cols);
-                if (g[r][c] || g[c][r]) continue;
+                if (g[r][c] || g[this.rows - 1 - r][this.cols - 1 - c]) continue;
                 // 左下角和右上角作为起点不能有墙
                 if ((r == this.rows - 2 && c == 1) || (r == 1 && c == this.cols - 2))
                     continue;
-                g[r][c] = g[c][r] = true;
+                // 中心对称
+                g[r][c] = g[this.rows - 1 - r][this.cols - 1 - c] = true;
                 break;
             }
         }
