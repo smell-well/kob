@@ -1,6 +1,4 @@
 const AC_GAME_OBJECT = [];
-
-
 export class AcGameObject {
     constructor() {
         AC_GAME_OBJECT.push(this);
