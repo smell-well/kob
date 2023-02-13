@@ -31,6 +31,7 @@ export class AcGameObject {
     }
 }
 
+
 let last_timestamp;
 const step = timestamp => {
     for (let obj of AC_GAME_OBJECT) {
