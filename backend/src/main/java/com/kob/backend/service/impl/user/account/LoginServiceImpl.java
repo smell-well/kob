@@ -31,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
         String jwt = JwtUtil.createJWT(user.getId().toString()); // 相当于只用ID作为payload信息
 
         Map<String, String> map = new HashMap<>();
-        map.put("error_massage", "success");
+        map.put("error_message", "success");
         map.put("token", jwt);
 
         return map;
