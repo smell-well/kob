@@ -23,7 +23,7 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <!-- <img class="w-15" src="@/assets/image/icon.png"> -->
-                            用户
+                            {{ $store.state.user.username }}
                         </a>
                         <ul class="dropdown-menu">
                             <router-link class="dropdown-item" :to="{name: 'userbot_index'}">我的bot</router-link>
@@ -31,7 +31,7 @@
                         </ul>
                     </li>
                 </ul>
-                <ul class="navbar-nav" v-else>
+                <ul class="navbar-nav" v-else-if="!$store.state.user.pulling_info">
                     <li class="nav-item">
                         <router-link :to="{name: 'user_account_login'}" class="nav-link" href="#" aria-expanded="false">
                             <!-- <img class="w-15" src="@/assets/image/icon.png"> -->
@@ -63,7 +63,9 @@ export default {
         let route_name = computed(() => route.name);
         const state = useStore();
 
+
         const logout = () => {
+            localStorage.removeItem("jwt_token");
             state.dispatch("logout");
         }
         

@@ -7,6 +7,7 @@ export default {
         photo: "",
         token: "",
         is_login: false,
+        pulling_info: true,
     },
     getters: {
     },
@@ -20,6 +21,10 @@ export default {
 
         updateToken(state, token) {
             state.token = token;
+        },
+
+        updatePullingInfo(state, flag) {
+            state.pulling_info = flag;
         },
 
         logout(state) {
@@ -42,6 +47,7 @@ export default {
                 success(resp) {
                     console.log(resp.error_message);
                     if (resp.error_message === "success") {
+                        localStorage.setItem("jwt_token", resp.token);
                         context.commit("updateToken", resp.token);
                         data.success(resp);
                     } else {
