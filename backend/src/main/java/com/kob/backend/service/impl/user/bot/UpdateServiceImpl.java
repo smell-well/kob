@@ -27,13 +27,18 @@ public class UpdateServiceImpl implements UpdateService {
         UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
         User user = loginUser.getUser();
 
-        int bot_id = Integer.parseInt(data.get("bot_id"));
+        Map<String, String> map = new HashMap<>();
 
+        if (data.get("bot_id") == null) {
+            map.put("error_message", "bot ID错误");
+            return map;
+        }
+
+        int bot_id = Integer.parseInt(data.get("bot_id"));
         String title = data.get("title");
         String description = data.get("description");
         String content = data.get("content");
 
-        Map<String, String> map = new HashMap<>();
 
         if (title == null || title.length() == 0) {
             map.put("error_message", "名称不能为空");
