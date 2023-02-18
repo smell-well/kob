@@ -3,7 +3,7 @@ import { Snake } from "./Snake";
 import { Wall } from "./Wall";
 
 export class GameMap extends AcGameObject {
-    constructor(ctx, parent) {
+    constructor(ctx, parent, store) {
         super();
         // console.log("clientheight: " + parent.clientHeight)
         // console.log("clientwidth: " + parent.clientWidth)
@@ -12,10 +12,10 @@ export class GameMap extends AcGameObject {
         this.parent = parent;
         this.L = 0; // 单位长度
 
-        this.cols = 13;
-        this.rows = 14;
-
-        this.inner_walls_count = 20;
+        this.rows = 13
+        this.cols = 14;
+        
+        this.store = store;
         this.walls = [];
 
         this.snakes = [
@@ -24,60 +24,8 @@ export class GameMap extends AcGameObject {
         ];
     }
 
-    check_connectivity(g, sx, sy, tx, ty) {
-        if (sx == tx && sy == ty) return true;
-        g[sx][sy] = true;
-
-        let dx = [-1, 0, 1, 0], dy = [0, -1, 0, 1];
-
-        for (let i = 0; i < 4; i++) {
-            let nx = sx + dx[i], ny = sy + dy[i];
-            if (!g[nx][ny] && this.check_connectivity(g, nx, ny, tx, ty)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
     create_walls() {
-        const g = [];
-
-        for (let i = 0; i < this.rows; i++) {
-            g[i] = [];
-            for (let j = 0; j < this.cols; j++) {
-                g[i][j] = false;
-            }
-        }
-
-        // 给四周加上墙
-        for (let i = 0; i < this.rows; i++) {
-            g[i][0] = g[i][this.cols - 1] = true;
-        }
-
-        for (let i = 0; i < this.cols; i++) {
-            g[0][i] = g[this.rows - 1][i] = true;
-        }
-
-        // 创建随机墙
-        for (let i = 0; i < this.inner_walls_count / 2; i++) {
-            for (let j = 0; j < 1000; j++) {
-                let r = parseInt(Math.random() * this.rows);
-                let c = parseInt(Math.random() * this.cols);
-                if (g[r][c] || g[this.rows - 1 - r][this.cols - 1 - c]) continue;
-                // 左下角和右上角作为起点不能有墙
-                if ((r == this.rows - 2 && c == 1) || (r == 1 && c == this.cols - 2))
-                    continue;
-                // 中心对称
-                g[r][c] = g[this.rows - 1 - r][this.cols - 1 - c] = true;
-                break;
-            }
-        }
-
-        let copy_g = JSON.parse(JSON.stringify(g));
-        if (!this.check_connectivity(copy_g, this.rows - 2, 1, 1, this.cols - 2)) {
-            return false;
-        }
+        let g = this.store.state.pk.gamemap;
 
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
@@ -86,8 +34,6 @@ export class GameMap extends AcGameObject {
                 }
             }
         }
-
-        return true;
     }
 
     add_listening_events() {
@@ -107,11 +53,7 @@ export class GameMap extends AcGameObject {
     }
 
     start() {
-        for (let i = 0; i < 1000; i++) {
-            if (this.create_walls()) {
-                break;
-            }
-        }
+        this.create_walls();
 
         this.add_listening_events();
     }
