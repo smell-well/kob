@@ -41,13 +41,32 @@ export default {
                         username: data.opponent_username,
                         photo: data.opponent_photo
                     });
-                    console.log(data.gamemap);
-                    store.commit("updateGamemap", data.gamemap);
+                    console.log(data.game.map)
+                    store.commit("updateGame", data.game);
 
                     setTimeout(() => {
                         store.commit("updateStatus", "playing");
-                    }, 2000);
+                    }, 200);
 
+                } else if (data.event === "stop_matching") {
+                    console.log(data);
+                } else if (data.event === "move") {
+                    console.log(data);
+                    const game = store.state.pk.gameObject;
+                    const [snake0, snake1] = game.snakes;
+                    snake0.set_direction(data.a_direction);
+                    snake1.set_direction(data.b_direction);
+
+                } else if (data.event === "result") {
+                    console.log(data);
+                    const game = store.state.pk.gameObject;
+                    const [snake0, snake1] = game.snakes;
+                    if (data.loser === "all" || data.loser === "A") {
+                        snake0.status = "die";
+                    }
+                    if (data.loser === "all" || data.loser === "B") {
+                        snake1.status = "die";
+                    }
                 }
             }
 
