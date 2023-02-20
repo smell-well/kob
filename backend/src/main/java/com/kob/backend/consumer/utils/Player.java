@@ -41,4 +41,13 @@ public class Player {
 
         return list;
     }
+
+    public String getStepsToString() {
+        StringBuffer sb = new StringBuffer();
+        for (int d : steps) {
+            sb.append(d);
+        }
+
+        return sb.toString();
+    }
 }

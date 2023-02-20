@@ -12,6 +12,7 @@ export default ({
         b_sx: 0,
         b_sy: 0,
         gameObject: null,
+        loser: "none",  //none, all, A, B
     },
     getters: {
     },
@@ -41,6 +42,10 @@ export default ({
 
         updateGameObject(state, gameObject) {
             state.gameObject = gameObject;
+        },
+
+        updateLoser(state, loser) {
+            state.loser = loser;
         }
     },
     actions: {

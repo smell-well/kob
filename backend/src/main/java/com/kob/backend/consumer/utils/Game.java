@@ -3,11 +3,9 @@ package com.kob.backend.consumer.utils;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.kob.backend.consumer.WebSocketServer;
+import com.kob.backend.pojo.Record;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Game extends Thread{
@@ -202,11 +200,41 @@ public class Game extends Thread{
         WebSocketServer.users.get(playerB.getId()).sendMessage(message);
     }
 
+    private void saveToDatabase() {
+        Record record = new Record(
+                null,
+                playerA.getId(),
+                playerA.getSx(),
+                playerA.getSy(),
+                playerB.getId(),
+                playerB.getSx(),
+                playerB.getSy(),
+                playerA.getStepsToString(),
+                playerB.getStepsToString(),
+                getMapToString(),
+                loser,
+                new Date()
+        );
+
+        WebSocketServer.recordMapper.insert(record);
+    }
+
+    private String getMapToString() {
+        StringBuffer sb = new StringBuffer();
+        for (int[] row : g) {
+            for (int d : row) {
+                sb.append(d);
+            }
+        }
+        return sb.toString();
+    }
+
     // 向两个client发送结果
     private void sendResult() {
         JSONObject resp = new JSONObject();
         resp.put("event", "result");
         resp.put("loser", loser);
+        saveToDatabase();
         sendAllMessage(resp.toJSONString());
     }
 
