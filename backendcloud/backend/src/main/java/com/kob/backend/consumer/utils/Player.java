@@ -12,6 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Player {
     private Integer id;
+    private Integer botId;
+    private String botCode;  // -1 表示人工
     private Integer sx;  // 起始坐标
     private Integer sy;
     private List<Integer> steps;  //移动路径
