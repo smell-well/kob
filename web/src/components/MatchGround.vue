@@ -66,7 +66,7 @@ export default {
 
         const refresh_bots = () => {
             $.ajax({
-                url: "http://localhost:3000/user/bot/getlist/",
+                url: "https://app1067.acapp.acwing.com.cn/api/user/bot/getlist/",
                 type: "get",
                 headers: {
                     Authorization: "Bearer " + store.state.user.token,
@@ -93,7 +93,7 @@ export default {
 div.matchground {
     width: 60vw;
     height: 70vh;
-    margin: 40px auto;
+    margin: 40px auto 20px auto;
     background-color: rgba(50, 50, 50, 0.5);
     border-radius: 5%;
 }

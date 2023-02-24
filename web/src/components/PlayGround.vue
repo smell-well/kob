@@ -20,6 +20,6 @@ export default {
 div.playground {
     width: 60vw;
     height: 70vh;
-    margin: 40px auto;
+    margin: 40px auto 20px auto;
 }
 </style>

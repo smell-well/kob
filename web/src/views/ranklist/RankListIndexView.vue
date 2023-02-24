@@ -59,7 +59,7 @@ export default {
         let pages = ref([]);
 
         const update_pages = () => {
-            let max_pages = parseInt(Math.ceil(users_count / 3));
+            let max_pages = parseInt(Math.ceil(users_count / 10));
             let new_pages = [];
             for (let i = current_page - 2; i <= current_page + 2; i++) {
                 if (i >= 1 && i <= max_pages) {
@@ -75,7 +75,7 @@ export default {
         const click_page = number => {
             if (number === -2) number = current_page - 1;
             if (number === -1) number = current_page + 1;
-            let max_pages = parseInt(Math.ceil(users_count / 3));
+            let max_pages = parseInt(Math.ceil(users_count / 10));
             
             
             if (number >= 1 && number <= max_pages) {
@@ -89,7 +89,7 @@ export default {
         const pull_page = page => {
             current_page = page
             $.ajax({
-                url: "http://localhost:3000/ranklist/getlist/",
+                url: "https://app1067.acapp.acwing.com.cn/api/ranklist/getlist/",
                 type: "get",
                 data: {
                     page: current_page,

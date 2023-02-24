@@ -27,10 +27,10 @@
                         </div>
                     </th>
                     <th>
-                        <div v-if="record.record.loser === 'A' && $store.state.user.id !== record.record.aid">
+                        <div v-if="record.record.loser === 'A' && parseInt($store.state.user.id) !== parseInt(record.record.aid)">
                             <span class="text-success">胜利</span>
                         </div>
-                        <div v-else-if="record.record.loser === 'B' && $store.state.user.id !== record.record.bid">
+                        <div v-else-if="record.record.loser === 'B' && parseInt($store.state.user.id) !== parseInt(record.record.bid)">
                             <span class="text-success">胜利</span>
                         </div>
                         <div v-else-if="record.record.loser === 'all'">
@@ -119,7 +119,7 @@ export default {
         const pull_page = page => {
             current_page = page
             $.ajax({
-                url: "http://localhost:3000/record/getlist/",
+                url: "https://app1067.acapp.acwing.com.cn/api/record/getlist/",
                 type: "get",
                 data: {
                     page: current_page,
@@ -132,6 +132,7 @@ export default {
                     records_count = resp.record_count;
                     update_pages();
                     console.log(resp)
+                    console.log("id " + store.state.user.id)
                 },
                 error(resp) {
                     console.log(resp)

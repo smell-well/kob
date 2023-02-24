@@ -1,7 +1,11 @@
 <template>
-    <PlayGround v-if="$store.state.pk.status === 'playing'"/>
-    <MatchGround v-if="$store.state.pk.status === 'matching'"/>
-    <ResultBoard v-if="$store.state.pk.loser !== 'none'"/>
+    <div class="ground">
+        <PlayGround v-if="$store.state.pk.status === 'playing'"/>
+        <MatchGround v-if="$store.state.pk.status === 'matching'"/>
+        <ResultBoard v-if="$store.state.pk.loser !== 'none'"/>
+    </div>
+    <div class="user-color" v-if="$store.state.pk.status === 'playing' && parseInt($store.state.pk.a_id) === parseInt($store.state.user.id)">左下角</div>
+    <div class="user-color" v-if="$store.state.pk.status === 'playing' && parseInt($store.state.pk.b_id) === parseInt($store.state.user.id)">右上角</div>
 </template>
 
 
@@ -20,7 +24,7 @@ export default {
     },
     setup() {
         const store = useStore();
-        const socketUrl = `ws://localhost:3000/websocket/${store.state.user.token}`;
+        const socketUrl = `wss://app1067.acapp.acwing.com.cn/websocket/${store.state.user.token}`;
 
         let socket = null;
         console.log(socketUrl);
@@ -91,4 +95,15 @@ export default {
 </script>
 
 <style scoped>
+div.user-color {
+    color: white;
+    text-align: center ;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.ground {
+    margin-bottom: 5px;
+    padding-bottom: 0;
+}
 </style>
