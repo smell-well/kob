@@ -48,6 +48,12 @@
             <version>1.18.24</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>joor-java-8</artifactId>
+            <version>0.9.14</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

@@ -3,6 +3,7 @@ package com.kob.backend.service.impl.user.account;
 import com.kob.backend.pojo.User;
 import com.kob.backend.service.impl.utils.UserDetailsImpl;
 import com.kob.backend.service.user.account.InfoService;
+import com.kob.backend.utils.JwtUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,8 +16,10 @@ import java.util.Map;
 public class InfoServiceImpl implements InfoService {
     @Override
     public Map<String, String> getInfo() {
+
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+
 
         UserDetailsImpl userDetails = (UserDetailsImpl) usernamePasswordAuthenticationToken.getPrincipal();
         User user = userDetails.getUser();

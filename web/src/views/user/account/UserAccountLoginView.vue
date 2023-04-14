@@ -47,21 +47,17 @@ export default {
         let error_message = ref("");
 
         const jwt_token = localStorage.getItem("jwt_token");
+        console.log(jwt_token)
         if (jwt_token) {
             store.commit("updateToken", jwt_token);
             store.dispatch("getInfo", {
-                // success(resp) {
-                //     if (resp.error_message === "success") {
-                //         router.push({name: "home"});
-                //         console.log("PullingInfo " + store.state.user.pulling_info);
-                //         store.commit("updatePullingInfo", false);
-                //     }
-                // },
+ 
                 success() {
                     router.push({name: "home"});
                     store.commit("updatePullingInfo", false);
                 },
                 error() {
+                    // console.log("111")
                     store.commit("updatePullingInfo", false);
                 }
             });
@@ -75,16 +71,22 @@ export default {
                 username: username.value,
                 password: password.value,
                 success() {
-                    store.dispatch("getInfo", {
-                        success() {
-                            router.push({name: 'home'});
-                            console.log(store.state.user);
-                        }
-                    })
+                    // store.dispatch("getInfo", {
+                    //     success() {
+                    //         router.push({name: 'home'});
+                    //         console.log(store.state.user);
+                    //     },
+                    //     error() {
+
+                    //     }
+                    // })
+                    // console.log("2222")
+                    router.push({name: 'home'});
+                    store.commit("updatePullingInfo", false);
                 },
-                error() {
+                error(resp) {
                     error_message.value = "用户名或密码错误";
-                    // console.log(resp);
+                    console.log(resp);
                 }
             })
         };

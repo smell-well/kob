@@ -1,5 +1,6 @@
 package com.kob.backend.config.filter;
 
+import com.kob.backend.exception.JwtAuthenticationException;
 import com.kob.backend.mapper.UserMapper;
 import com.kob.backend.pojo.User;
 import com.kob.backend.service.impl.utils.UserDetailsImpl;
@@ -40,7 +41,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             Claims claims = JwtUtil.parseJWT(token);
             userid = claims.getSubject();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+//            System.out.println(e.getMessage());
+//            e.printStackTrace();
+            throw new JwtAuthenticationException(e.getMessage(), e);
         }
 
         User user = userMapper.selectById(Integer.parseInt(userid));

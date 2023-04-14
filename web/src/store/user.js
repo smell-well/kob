@@ -49,7 +49,11 @@ export default {
                     if (resp.error_message === "success") {
                         localStorage.setItem("jwt_token", resp.token);
                         context.commit("updateToken", resp.token);
-                        data.success(resp);
+                        context.commit("updateUser", {
+                            ...resp,
+                            is_login: true
+                        });
+                        data.success();
                     } else {
                         data.error(resp);
                     }
@@ -80,7 +84,13 @@ export default {
                     console.log(resp)
                 },
                 error(resp) {
-                    console.log(resp)
+                    if (resp.status == 401) {
+                        const e = JSON.parse(resp.responseText)
+                        console.log(e)
+                        localStorage.removeItem("jwt_token");
+                        context.commit("updateToken", null);
+                        data.error()
+                    }                    
                 }
             });
         },

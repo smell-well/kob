@@ -65,6 +65,7 @@ export default {
         }
 
         const refresh_bots = () => {
+            // console.log(store.state.user.token)
             $.ajax({
                 url: "https://app1067.acapp.acwing.com.cn/api/user/bot/getlist/",
                 type: "get",
@@ -74,6 +75,9 @@ export default {
                 success(resp) {
                     bots.value = resp;
                 },
+                error(resp) {
+                    console.log(resp)
+                }
             })
         }
         refresh_bots();
